@@ -12,12 +12,11 @@ const getSubBoards = async (req, res, next) => {
 
 const createSubBoard = async (req, res, next) => {
   try {
-    const { name, filterCriteriaLabel, project, wipLimit } = req.body
+    const { name, filterCriteriaLabel, wipLimit } = req.body
 
     const result = await subBoardService.createSubBoard({
       name,
       filterCriteriaLabel,
-      project,
       wipLimit
     })
 

@@ -11,13 +11,14 @@ const ticketRouter = require('./routes/ticket.route');
 const { errorHandler } = require('./errorHandler');
 const { connectMongoose } = require('./mongoose');
 const debug = require('debug')('server:api.js')
-
+const cors = require('cors')
 
 const app = express();
 
 connectMongoose()
 
 app.use(logger('dev'));
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

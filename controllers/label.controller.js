@@ -12,12 +12,13 @@ const getLabels = async (req, res, next) => {
 
 const createLabel = async (req, res, next) => {
   try {
-    const { name, description, color } = req.body
+    const { name, description, color, project } = req.body
 
     const result = await labelService.createLabel({
       name,
       description,
-      color
+      color,
+      project
     })
 
     res.send(result)

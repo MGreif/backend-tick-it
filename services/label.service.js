@@ -2,11 +2,7 @@ const labelModel = require('../models/label.model')
 
 
 const getLabels = async (filter = {}) => {
-    const result = await labelModel.find(filter)
-        .populate('members')
-        .populate('createdBy')
-        .populate('boards')
-        .lean()
+    const result = await labelModel.find(filter).lean()
     return result
 }
 

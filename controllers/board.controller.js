@@ -1,4 +1,5 @@
 const debug = require('debug')('api:controller')
+const { HttpError } = require('../errorHandler')
 const boardService = require('../services/board.service')
 
 const getBoards = async (req, res, next) => {
@@ -10,12 +11,24 @@ const getBoards = async (req, res, next) => {
   }
 }
 
+const getBoardsByProjectId = async (req, res, next) => {
+  try {
+    const projectId = req.params.projectId
+    if(!projectId) throw new HttpError(400, "No projectId given")
+    const result = await boardService.getBoards({ project: projectId })
+    res.send(result)
+  } catch (error) {
+    next(error)
+  }
+}
+
 const createBoard = async (req, res, next) => {
   try {
-    const { name, subBoards } = req.body
+    const { name, subBoards, project } = req.body
 
     const result = await boardService.createBoard({
       name,
+      project,
       subBoards
     })
 
@@ -25,4 +38,4 @@ const createBoard = async (req, res, next) => {
   }
 }
 
-module.exports = { getBoards, createBoard }
+module.exports = { getBoards, createBoard, getBoardsByProjectId }

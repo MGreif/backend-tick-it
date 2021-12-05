@@ -5,7 +5,6 @@ const getProjects = async (filter = {}) => {
     const result = await projectModel.find(filter)
         .populate('members')
         .populate('createdBy')
-        .populate('boards')
         .lean()
     return result
 }
