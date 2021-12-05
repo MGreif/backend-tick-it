@@ -1,8 +1,16 @@
 const debug = require('debug')('api:errors')
 
-const errorHandler = (error, req, res, next) => {
-    debug('error occured', error)
-    res.status(500).send('error occured' + error)
+class HttpError extends Error {
+    constructor (statusCode, message) {
+        super()
+        this.statusCode = statusCode;
+        this.message = message
+    }
 }
 
-module.exports = { errorHandler }
+const errorHandler = (error, req, res, next) => {
+    debug('[ERROR]', error)
+    res.status(error.statusCode || 500).send(error)
+}
+
+module.exports = { errorHandler, HttpError }

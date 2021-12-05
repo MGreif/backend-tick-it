@@ -1,6 +1,7 @@
 const debug = require('debug')('api:controller')
 const userService = require('../services/user.service')
 const bcrypt = require('bcrypt')
+const { HttpError } = require('../errorHandler')
 
 const getUsers = async (req, res, next) => {
   try {
@@ -15,7 +16,7 @@ const createUser = async (req, res, next) => {
   try {
     const { username, name, surname, profilePicture, password, roles } = req.body
 
-    if (!password) throw Error('No password was provided')
+    if (!password) throw HttpError(400, 'No password was provided')
 
     const bcryptedPassword = await bcrypt.hash(password, 12)
     const result = await userService.createUser({
