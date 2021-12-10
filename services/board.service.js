@@ -1,3 +1,4 @@
+const { ObjectId } = require('bson')
 const boardModel = require('../models/board.model')
 
 
@@ -13,4 +14,10 @@ const createBoard = async (boardData) => {
     return result
 }
 
-module.exports = { getBoards, createBoard }
+const appendSubBoardToBoard = async (boardId, subBoardId) => {
+    const result = await boardModel
+        .updateOne({_id: boardId}, { $push: { subBoards: ObjectId(subBoardId) } })
+    return result
+}
+
+module.exports = { getBoards, createBoard, appendSubBoardToBoard }

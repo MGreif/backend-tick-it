@@ -1,5 +1,7 @@
 const debug = require('debug')('api:controller')
 const subBoardService = require('../services/subBoard.service')
+const boardService = require('../services/board.service')
+const { HttpError } = require('../errorHandler')
 
 const getSubBoards = async (req, res, next) => {
   try {
@@ -10,20 +12,24 @@ const getSubBoards = async (req, res, next) => {
   }
 }
 
-const createSubBoard = async (req, res, next) => {
+const createSubBoardAndAppendToBoard = async (req, res, next) => {
   try {
-    const { name, filterCriteriaLabel, wipLimit } = req.body
+    const { name, filterCriteriaLabel, wipLimit, boardId } = req.body
 
-    const result = await subBoardService.createSubBoard({
+    if (!boardId) throw new HttpError(400, "boardId is not given") 
+
+    const createdSubBoard = await subBoardService.createSubBoard({
       name,
       filterCriteriaLabel,
       wipLimit
     })
 
-    res.send(result)
+    const updatedBoard = await boardService.appendSubBoardToBoard(boardId, createdSubBoard._id)
+
+    res.send(updatedBoard)
   } catch (error) {
     next(error)
   }
 }
 
-module.exports = { getSubBoards, createSubBoard }
+module.exports = { getSubBoards, createSubBoardAndAppendToBoard }
