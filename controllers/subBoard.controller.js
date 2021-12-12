@@ -24,12 +24,30 @@ const createSubBoardAndAppendToBoard = async (req, res, next) => {
       wipLimit
     })
 
-    const updatedBoard = await boardService.appendSubBoardToBoard(boardId, createdSubBoard._id)
+    await boardService.appendSubBoardToBoard(boardId, createdSubBoard._id)
 
-    res.send(updatedBoard)
+    res.send(createdSubBoard)
   } catch (error) {
     next(error)
   }
 }
 
-module.exports = { getSubBoards, createSubBoardAndAppendToBoard }
+const deleteSubBoard = async (req, res, next) => {
+  try {
+    const { subBoardId } = req.params
+    if (!subBoardId) throw new HttpError(400, "subBoardId is not given") 
+
+    const deletedObject = await subBoardService.deleteSubBoard(subBoardId)
+
+    if (!deletedObject) throw new HttpError(400, `SubBoard with id: ${subBoardId} could not be deleted`) 
+
+    await boardService.removeSubBoardFromBoard(subBoardId)
+
+    res.send(deletedObject)
+
+  } catch(error) {
+    next(error)
+  }
+}
+
+module.exports = { getSubBoards, createSubBoardAndAppendToBoard, deleteSubBoard }
