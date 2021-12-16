@@ -19,4 +19,10 @@ const deleteSubBoard = async (subBoardId) => {
   return result
 }
 
-module.exports = { getSubBoards, createSubBoard, deleteSubBoard }
+const checkIfSubBoardsHaveSpecificLabelAsFilterCriteria = async (labelId) => {
+  const result = await subBoardModel.find({ filterCriteriaLabel: labelId })
+  return result.length > 0
+}
+
+
+module.exports = { getSubBoards, createSubBoard, deleteSubBoard, checkIfSubBoardsHaveSpecificLabelAsFilterCriteria }
