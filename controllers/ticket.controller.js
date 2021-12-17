@@ -1,5 +1,6 @@
 const debug = require('debug')('api:controller')
 const ticketService = require('../services/ticket.service')
+const { HttpError } = require('../errorHandler')
 
 const getTickets = async (req, res, next) => {
   try {
@@ -44,4 +45,63 @@ const createTicket = async (req, res, next) => {
   }
 }
 
-module.exports = { getTickets, createTicket }
+const updateTicket = async (req, res, next) => {
+  try {
+    const { 
+      title,
+      description,
+      weight,
+      dateDue,
+      assignee,
+      createdBy,
+      labels,
+      realtedTickets,
+      project,
+      closed
+     } = req.body
+    const { ticketId } = req.params
+
+    const updateData = {
+      title,
+      description,
+      weight,
+      dateDue,
+      assignee,
+      createdBy,
+      labels,
+      realtedTickets,
+      project,
+      closed
+    }
+
+    const LEGAL_TICKET_UPDATE_FIELDS = [
+      "title",
+      "description",
+      "weight",
+      "dateDue",
+      "assignee",
+      "createdBy",
+      "labels",
+      "realtedTickets",
+      "project",
+      "closed"
+    ]
+
+    const legalUpdateData = Object.entries(updateData).reduce((acc, curr) => {
+      const [key, value] = curr
+      if (value && LEGAL_TICKET_UPDATE_FIELDS.includes(key)) acc[key] = value
+      return acc
+    }, {})
+
+    if (!ticketId) throw new HttpError(400, "No ticketId passed")
+
+    const result = await ticketService.updateTicket(legalUpdateData, ticketId)
+
+    res.send(result)
+
+  } catch (error) {
+    next(error)
+  }
+}
+
+module.exports = { getTickets, createTicket, updateTicket }

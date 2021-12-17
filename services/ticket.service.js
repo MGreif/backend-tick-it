@@ -23,4 +23,11 @@ const removeLabelFromAllTickets = async (labelId) => {
   return result
 }
 
-module.exports = { getTickets, createTicket, removeLabelFromAllTickets }
+const updateTicket = async (updateData, ticketId) => {
+  const result = await ticketModel
+    .updateOne({ _id: ticketId }, {$set: { ...updateData }})
+
+  return result
+}
+
+module.exports = { getTickets, createTicket, removeLabelFromAllTickets, updateTicket }
