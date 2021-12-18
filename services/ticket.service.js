@@ -12,6 +12,17 @@ const getTickets = async (filter = {}) => {
   return result
 }
 
+const getTicket = async (ticketId) => {
+  const result = await ticketModel.findById(ticketId)
+    .populate('assignee')
+    .populate('createdBy')
+    .populate('labels')
+    .populate('relatedTickets', 'title')
+    .populate('project')
+    .lean()
+  return result
+}
+
 const createTicket = async (ticketData) => {
   const result = await ticketModel.create(ticketData)
   return result
@@ -30,4 +41,4 @@ const updateTicket = async (updateData, ticketId) => {
   return result
 }
 
-module.exports = { getTickets, createTicket, removeLabelFromAllTickets, updateTicket }
+module.exports = { getTickets, createTicket, removeLabelFromAllTickets, updateTicket, getTicket }

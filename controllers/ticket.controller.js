@@ -11,6 +11,19 @@ const getTickets = async (req, res, next) => {
   }
 }
 
+const getTicket = async (req, res, next) => {
+  try {
+    const { ticketId } = req.params
+
+    if (!ticketId) throw new HttpError(400, "ticketId is not given")
+
+    const result = await ticketService.getTicket(ticketId)
+    res.send(result)
+  } catch (error) {
+    next(error)
+  }
+}
+
 const createTicket = async (req, res, next) => {
   try {
     const { 
@@ -104,4 +117,4 @@ const updateTicket = async (req, res, next) => {
   }
 }
 
-module.exports = { getTickets, createTicket, updateTicket }
+module.exports = { getTickets, createTicket, updateTicket, getTicket }
