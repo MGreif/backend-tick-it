@@ -6,4 +6,5 @@ router.get('/', boardController.getBoards)
 router.get('/:projectId', boardController.getBoardsByProjectId)
 router.post('/', boardController.createBoard)
 
+
 module.exports = router;

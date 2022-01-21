@@ -1,4 +1,3 @@
-const debug = require('debug')('api:controller')
 const userService = require('../services/user.service')
 const bcrypt = require('bcrypt')
 const { HttpError } = require('../errorHandler')

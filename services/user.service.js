@@ -1,4 +1,3 @@
-const { HttpError } = require('../errorHandler')
 const userModel = require('../models/user.model')
 
 

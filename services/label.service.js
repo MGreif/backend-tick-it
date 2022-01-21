@@ -1,5 +1,4 @@
 const labelModel = require('../models/label.model')
-const subBoardModel = require('../models/subBoard.model')
 
 const getLabels = async (filter = {}) => {
   const result = await labelModel.find(filter).lean()

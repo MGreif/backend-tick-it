@@ -1,4 +1,3 @@
-const debug = require('debug')('api:controller')
 const projectService = require('../services/project.service')
 const boardService = require('../services/board.service')
 const ticketService = require('../services/ticket.service')

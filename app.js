@@ -10,7 +10,6 @@ const subBoardRouter = require('./routes/subBoard.route');
 const ticketRouter = require('./routes/ticket.route');
 const { errorHandler } = require('./errorHandler');
 const { connectMongoose } = require('./mongoose');
-const debug = require('debug')('server:api.js')
 const cors = require('cors')
 
 const app = express();

@@ -1,4 +1,3 @@
-const debug = require('debug')('api:controller')
 const subBoardService = require('../services/subBoard.service')
 const boardService = require('../services/board.service')
 const { HttpError } = require('../errorHandler')

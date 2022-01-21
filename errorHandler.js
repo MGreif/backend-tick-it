@@ -8,7 +8,7 @@ class HttpError extends Error {
     }
 }
 
-const errorHandler = (error, req, res, next) => {
+const errorHandler = (error, req, res) => {
     debug('[ERROR]', error)
     res.status(error.statusCode || 500).send(error)
 }
