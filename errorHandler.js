@@ -1,4 +1,4 @@
-const debug = require('debug')('api:errors')
+const { logger } = require('./config/logger')
 
 class HttpError extends Error {
     constructor (statusCode, message) {
@@ -9,7 +9,7 @@ class HttpError extends Error {
 }
 
 const errorHandler = (error, req, res) => {
-    debug('[ERROR]', error)
+    logger.error('[ERROR]', error)
     res.status(error.statusCode || 500).send(error)
 }
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+require('dotenv').config()
 const userRouter = require('./routes/user.route');
 const projectRouter = require('./routes/project.route');
 const labelRouter = require('./routes/label.route');
@@ -9,14 +9,15 @@ const boardRouter = require('./routes/board.route');
 const subBoardRouter = require('./routes/subBoard.route');
 const ticketRouter = require('./routes/ticket.route');
 const { errorHandler } = require('./errorHandler');
-const { connectMongoose } = require('./mongoose');
-const cors = require('cors')
+const { connectMongoose } = require('./config/mongoose');
+const cors = require('cors');
+const { loggerMiddleware } = require('./config/logger');
 
 const app = express();
 
 connectMongoose()
 
-app.use(logger('dev'));
+app.use(loggerMiddleware);
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

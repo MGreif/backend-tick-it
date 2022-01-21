@@ -1,6 +1,6 @@
 const app = require('./app')
-const debug = require('debug')('server:server.js')
 const http = require('http')
+const { logger } = require('./config/logger')
 
 const port = process.env.PORT || '3030'
 
@@ -14,5 +14,5 @@ server.on('listening', onListening)
 function onListening () {
   const addr = server.address()
   const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port
-  debug('Listening on ' + bind)
+  logger.debug('Listening on ' + bind)
 }
