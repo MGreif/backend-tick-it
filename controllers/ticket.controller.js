@@ -34,6 +34,7 @@ const createTicket = async (req, res, next) => {
       createdBy,
       labels,
       realtedTickets,
+      allocatedSubBoard,
       project,
       closed
      } = req.body
@@ -47,6 +48,7 @@ const createTicket = async (req, res, next) => {
       createdBy,
       labels,
       realtedTickets,
+      allocatedSubBoard,
       project,
       closed
     })
@@ -67,7 +69,8 @@ const updateTicket = async (req, res, next) => {
       assignee,
       createdBy,
       labels,
-      realtedTickets,
+      relatedTickets,
+      allocatedSubBoard,
       project,
       closed
      } = req.body
@@ -81,7 +84,8 @@ const updateTicket = async (req, res, next) => {
       assignee,
       createdBy,
       labels,
-      realtedTickets,
+      relatedTickets,
+      allocatedSubBoard,
       project,
       closed
     }
@@ -94,19 +98,20 @@ const updateTicket = async (req, res, next) => {
       "assignee",
       "createdBy",
       "labels",
-      "realtedTickets",
+      "relatedTickets",
+      "allocatedSubBoard",
       "project",
       "closed"
     ]
 
     const legalUpdateData = Object.entries(updateData).reduce((acc, curr) => {
       const [key, value] = curr
-      if (value && LEGAL_TICKET_UPDATE_FIELDS.includes(key)) acc[key] = value
+      if (value !== undefined && LEGAL_TICKET_UPDATE_FIELDS.includes(key)) acc[key] = value
       return acc
     }, {})
 
     if (!ticketId) throw new HttpError(400, "No ticketId passed")
-
+    console.log('updateData', legalUpdateData)
     const result = await ticketService.updateTicket(legalUpdateData, ticketId)
 
     res.send(result)
