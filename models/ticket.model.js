@@ -11,6 +11,7 @@ const ticketSchema = new mongoose.Schema({
     allocatedSubBoard: { type: mongoose.Types.ObjectId, ref: 'SubBoard', default: null },
     relatedTickets: [{ type: mongoose.Types.ObjectId, ref: 'Ticket', default: null }],
     project: { type: mongoose.Types.ObjectId, ref: 'Project', default: null },
+    subBoardIndex: {type: Number, default: 0 },
     closed: Boolean
 },
 {

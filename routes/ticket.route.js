@@ -6,5 +6,5 @@ router.get('/', ticketController.getTickets)
 router.get('/:ticketId', ticketController.getTicket)
 router.post('/', ticketController.createTicket)
 router.patch('/:ticketId', ticketController.updateTicket)
-
+router.patch('/:ticketId/move', ticketController.moveTicket)
 module.exports = router;

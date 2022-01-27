@@ -121,4 +121,30 @@ const updateTicket = async (req, res, next) => {
   }
 }
 
-module.exports = { getTickets, createTicket, updateTicket, getTicket }
+const moveTicket = async (req, res, next) => {
+  try {
+    const ticketId = req.params.ticketId
+    const { subBoardId, index } = req.body
+    if (!ticketId) throw new HttpError(400, "No ticketId passed")
+    
+    if (subBoardId === 'backlog') {
+      const result = await ticketService.updateTicket({ closed: false, allocatedSubBoard: null}, ticketId)
+      res.send(result)
+      return
+    }
+    if (subBoardId === 'closed') {
+      const result = await ticketService.updateTicket({ closed: true }, ticketId)
+      res.send(result)
+      return
+    }
+
+    const result = await ticketService.moveTicket(ticketId, subBoardId, index)
+    
+    res.send(result)
+
+  } catch (error) {
+    next(error)
+  }
+}
+
+module.exports = { getTickets, createTicket, updateTicket, getTicket, moveTicket }
