@@ -42,10 +42,16 @@ const updateTicket = async (updateData, ticketId) => {
   return result
 }
 
+const deleteTicket = async (ticketId) => {
+  const result = await ticketModel
+    .deleteOne({ _id: ticketId })
+  return result
+}
+
 const moveTicket = async (ticketId, subBoardId, index) => {
   const result = await ticketModel
     .updateOne({ _id: ticketId }, {$set: { allocatedSubBoard: subBoardId, index }})
   return result
 }
 
-module.exports = { moveTicket, getTickets, createTicket, removeLabelFromAllTickets, updateTicket, getTicket }
+module.exports = { moveTicket, getTickets, createTicket, removeLabelFromAllTickets, updateTicket, getTicket, deleteTicket }
