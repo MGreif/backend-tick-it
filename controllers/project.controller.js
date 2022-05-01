@@ -41,7 +41,6 @@ const getProjectById = async (req, res, next) => {
 
 const createProject = async (req, res, next) => {
   try {
-    logger.debug('CALLED')
     const { name, description, members, createdBy } = req.body
     const result = await projectService.createProject({
       name,
