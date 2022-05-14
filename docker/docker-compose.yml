@@ -1,0 +1,9 @@
+services:
+  tick-it-service:
+    container_name: tick-it-service
+    network_mode: host
+    env_file:
+      - ../.env
+    build: ..
+    volumes:
+      - ../logs:/app/logs

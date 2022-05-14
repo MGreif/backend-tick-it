@@ -1,0 +1,10 @@
+services:
+  tick-it-service:
+    container_name: tick-it-service
+    image: tick-it-service:release
+    network_mode: host
+    env_file:
+      - ../.env
+    build: ..
+    volumes:
+      - /home/mgreif/logs/tick-it-service:/app/logs
