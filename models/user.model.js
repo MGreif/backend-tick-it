@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
     name: String,
     surname: String,
     username: String,
+    keycloakId: String,
     password: String,
     profilePicture: String,
     roles: [String]

@@ -11,6 +11,17 @@ const getUsers = async (req, res, next) => {
   }
 }
 
+const getUser = async (req, res, next) => {
+  try {
+    const keycloakId = req.params.keycloakId
+    const result = await userService.getUser({ keycloakId })
+    console.log(result)
+    res.send(result)
+  } catch (error) {
+    next(error)
+  }
+}
+
 const createUser = async (req, res, next) => {
   try {
     const { username, name, surname, profilePicture, password, roles } = req.body
@@ -33,4 +44,4 @@ const createUser = async (req, res, next) => {
   }
 }
 
-module.exports = { getUsers, createUser }
+module.exports = { getUsers, createUser, getUser }

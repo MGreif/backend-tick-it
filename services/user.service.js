@@ -6,9 +6,13 @@ const getUsers = async (filter = {}) => {
     return result
 }
 
+const getUser = async (filter = {}) => {
+    const result = await userModel.findOne(filter).lean()
+    return result
+}
 const createUser = async (userData) => {
     const result = await userModel.create(userData)
     return result
 }
 
-module.exports = { getUsers, createUser }
+module.exports = { getUsers, createUser, getUser }
