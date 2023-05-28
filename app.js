@@ -10,19 +10,16 @@ const subBoardRouter = require('./routes/subBoard.route')
 const ticketRouter = require('./routes/ticket.route')
 const indexRouter = require('./routes/index.route')
 const { errorHandler } = require('./errorHandler')
-const { connectMongoose } = require('./config/mongoose')
 const cors = require('cors')
 const { loggerMiddleware } = require('./config/logger')
-
 const app = express()
 
-connectMongoose()
 
 app.use(loggerMiddleware)
 app.use(cors({ origin: '*' }))
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 //app.use(express.static(path.join(__dirname, 'public')))
 

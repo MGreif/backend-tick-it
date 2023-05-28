@@ -1,15 +1,16 @@
 const app = require('./app')
 const http = require('http')
 const { logger } = require('./config/logger')
+const {connectMongoose} = require("./config/mongoose");
 
 const port = process.env.PORT || '3030'
 
-app.set('port', port)
-
 const server = http.createServer(app)
+connectMongoose().then(() => {
+  server.listen(port)
+  server.on('listening', onListening)
+})
 
-server.listen(port)
-server.on('listening', onListening)
 
 function onListening () {
   const addr = server.address()

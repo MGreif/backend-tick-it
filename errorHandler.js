@@ -8,9 +8,9 @@ class HttpError extends Error {
     }
 }
 
-const errorHandler = (error, req, res) => {
-    logger.error('[ERROR]', error)
-    res.status(error.statusCode || 500).send(error)
+const errorHandler = (err, req, res, next) => {
+    logger.error('[ERROR]', err)
+    res.status(500).send(err)
 }
 
 module.exports = { errorHandler, HttpError }

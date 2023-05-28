@@ -16,7 +16,7 @@ const createBoard = async (boardData) => {
 
 const appendSubBoardToBoard = async (boardId, subBoardId) => {
   const result = await boardModel
-    .updateOne({ _id: boardId }, { $push: { subBoards: ObjectId(subBoardId) } })
+    .updateOne({ _id: boardId }, { $push: { subBoards: new ObjectId(subBoardId) } })
   return result
 }
 
