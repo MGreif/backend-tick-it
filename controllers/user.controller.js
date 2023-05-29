@@ -15,7 +15,6 @@ const getUser = async (req, res, next) => {
   try {
     const keycloakId = req.params.keycloakId
     const result = await userService.getUser({ keycloakId })
-    console.log(result)
     res.send(result)
   } catch (error) {
     next(error)
@@ -24,18 +23,10 @@ const getUser = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
   try {
-    const { username, name, surname, profilePicture, password, roles } = req.body
+    const { keycloakId } = req.body
 
-    if (!password) throw HttpError(400, 'No password was provided')
-
-    const bcryptedPassword = await bcrypt.hash(password, 12)
     const result = await userService.createUser({
-      username,
-      name,
-      surname,
-      profilePicture,
-      password: bcryptedPassword,
-      roles
+      keycloakId
     })
 
     res.send(result)
@@ -44,4 +35,35 @@ const createUser = async (req, res, next) => {
   }
 }
 
-module.exports = { getUsers, createUser, getUser }
+const getOrCreateUser = async (req, res, next) => {
+  try {
+    const { keycloakId } = req.params
+
+    let result = await userService.getUser({ keycloakId: keycloakId })
+
+    if (!result) {
+        result = await userService.createUser({
+        keycloakId
+      })
+    }
+
+
+    res.send(result)
+  } catch (error) {
+    next(error)
+  }
+}
+
+const deleteUser = async (req, res, next) => {
+  try {
+    const { id } = req.params
+
+    const result = await userService.deleteUser({_id: id})
+
+    res.send(result)
+  } catch (error) {
+    next(error)
+  }
+}
+
+module.exports = { getUsers, createUser, getUser, deleteUser, getOrCreateUser }

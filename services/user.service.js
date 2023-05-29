@@ -15,4 +15,8 @@ const createUser = async (userData) => {
     return result
 }
 
-module.exports = { getUsers, createUser, getUser }
+const deleteUser = async (filter = {}) => {
+    const result = await userModel.deleteMany(filter)
+    return result
+}
+module.exports = { getUsers, createUser, getUser, deleteUser }
